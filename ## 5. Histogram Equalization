@@ -1,0 +1,42 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2 as cv
+import os
+
+def manual_hist_equalization(gray_img):
+    hist, _ = np.histogram(gray_img.flatten(), 256, [0, 256])
+    cdf = hist.cumsum()
+    cdf_masked = np.ma.masked_equal(cdf, 0)
+    cdf_normalized = (cdf_masked - cdf_masked.min()) * 255 / (cdf_masked.max() - cdf_masked.min())
+    cdf_final = np.ma.filled(cdf_normalized, 0).astype('uint8')
+    return cdf_final[gray_img]
+
+img_path = r"C:\Users\Rusiru_fdo\Desktop\a1images\shells.tif"
+img_orig = cv.imread(img_path, cv.IMREAD_GRAYSCALE)
+
+if img_orig is None:
+    raise FileNotFoundError(f"Image not found at {img_path}")
+
+equalized_img = manual_hist_equalization(img_orig)
+
+plt.figure(figsize=(12, 6))
+plt.subplot(221)
+plt.imshow(img_orig, cmap='gray')
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(222)
+plt.imshow(equalized_img, cmap='gray')
+plt.title('Equalized Image')
+plt.axis('off')
+
+plt.subplot(223)
+plt.hist(img_orig.ravel(), 256, [0, 256], color='gray')
+plt.title('Histogram Before Equalization')
+
+plt.subplot(224)
+plt.hist(equalized_img.ravel(), 256, [0, 256], color='gray')
+plt.title('Histogram After Equalization')
+
+plt.tight_layout()
+plt.show()
