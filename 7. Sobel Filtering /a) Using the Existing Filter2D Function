@@ -1,0 +1,21 @@
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+import cv2 as cv
+
+img = cv.imread(r"C:\Users\Rusiru_fdo\Desktop\a1images\einstein.png", cv.IMREAD_GRAYSCALE)
+
+kernel = np.array([[1, 0, -1],
+                   [2, 0, -2],
+                   [1, 0, -1]], dtype='float')
+
+img_filt = cv.filter2D(img, -1, kernel)
+
+fig, ax = plt.subplots(1, 2, sharex=True, sharey=True, figsize=(12, 12))
+ax[0].imshow(img, cmap='gray')
+ax[0].set_title('Original Image')
+ax[0].axis('off')
+ax[1].imshow(img_filt, cmap='gray')
+ax[1].set_title('Sobel Filtered Image')
+ax[1].axis('off')
+plt.show()
