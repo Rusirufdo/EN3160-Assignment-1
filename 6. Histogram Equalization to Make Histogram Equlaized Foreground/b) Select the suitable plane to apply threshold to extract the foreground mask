@@ -1,0 +1,24 @@
+threshold = 160
+
+ret1, foreground_mask1 = cv.threshold(h_channel, threshold, 255, cv.THRESH_BINARY)
+ret2, foreground_mask2 = cv.threshold(s_channel, threshold, 255, cv.THRESH_BINARY)
+ret3, foreground_mask3 = cv.threshold(v_channel, threshold, 255, cv.THRESH_BINARY)
+
+plt.figure(figsize=(12,6))
+
+plt.subplot(131)
+plt.imshow(foreground_mask1, cmap='gray')
+plt.title('Foreground Mask from Hue Plane')
+plt.axis('off')
+
+plt.subplot(132)
+plt.imshow(foreground_mask2, cmap='gray')
+plt.title('Foreground Mask from Saturation Plane')
+plt.axis('off')
+
+plt.subplot(133)
+plt.imshow(foreground_mask3, cmap='gray')
+plt.title('Foreground Mask from Value Plane')
+plt.axis('off')
+
+plt.show()
