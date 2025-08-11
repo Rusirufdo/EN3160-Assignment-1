@@ -1,0 +1,45 @@
+b_equalized = cv.equalizeHist(foreground_img[:, :, 0])
+g_equalized = cv.equalizeHist(foreground_img[:, :, 1])
+r_equalized = cv.equalizeHist(foreground_img[:, :, 2])
+
+equalized_img = cv.merge((b_equalized, g_equalized, r_equalized))
+
+b_equalized_hist = cv.calcHist([equalized_img], [0], None, [256], [0, 256])
+g_equalized_hist = cv.calcHist([equalized_img], [1], None, [256], [0, 256])
+r_equalized_hist = cv.calcHist([equalized_img], [2], None, [256], [0, 256])
+
+b_cumulative = np.cumsum(b_equalized_hist)
+g_cumulative = np.cumsum(g_equalized_hist)
+r_cumulative = np.cumsum(r_equalized_hist)
+
+plt.figure(figsize=(12, 8))
+plt.subplot(121)
+plt.imshow(cv.cvtColor(foreground_img, cv.COLOR_BGR2RGB))
+plt.title('Foreground of Original Image')
+plt.axis('off')
+
+plt.subplot(122)
+plt.imshow(cv.cvtColor(equalized_img, cv.COLOR_BGR2RGB))
+plt.title('Foreground of Equalized Image')
+plt.axis('off')
+plt.show()
+
+plt.figure(figsize=(18, 4))
+plt.subplot(131)
+plt.plot(r_cumulative, color='red')
+plt.title('Cumulative Histogram for Equalized Red Channel')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+
+plt.subplot(132)
+plt.plot(g_cumulative, color='green')
+plt.title('Cumulative Histogram for Equalized Green Channel')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+
+plt.subplot(133)
+plt.plot(b_cumulative, color='blue')
+plt.title('Cumulative Histogram for Equalized Blue Channel')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+plt.show()
