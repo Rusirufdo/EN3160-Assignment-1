@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2 as cv
+
+def sobel_filter(image, kernel):
+    img_height, img_width = image.shape
+    kernel_size = kernel.shape[0]
+    output_img = np.zeros((img_height - kernel_size + 1, img_width - kernel_size + 1))
+    for i in range(output_img.shape[0]):
+        for j in range(output_img.shape[1]):
+            region = image[i : i + kernel_size, j : j + kernel_size]
+            conv_result = np.sum(region * kernel)
+            if conv_result < 0:
+                conv_result = 0
+            elif conv_result > 255:
+                conv_result = 255
+            output_img[i, j] = conv_result
+    return output_img.astype(np.uint8)
+
+img_orig = cv.imread(r"C:\Users\Rusiru_fdo\Desktop\a1images\einstein.png", cv.IMREAD_GRAYSCALE)
+
+x_kernel = np.array([[-1, 0, 1],
+                     [-2, 0, 2],
+                     [-1, 0, 1]], dtype='float')
+y_kernel = np.array([[-1, -2, -1],
+                     [0, 0, 0],
+                     [1, 2, 1]], dtype='float')
+
+sobel_x = sobel_filter(img_orig, x_kernel)
+sobel_y = sobel_filter(img_orig, y_kernel)
+gradient_mag = np.sqrt(sobel_x.astype(float)**2 + sobel_y.astype(float)**2)
+gradient_mag = np.clip(gradient_mag, 0, 255).astype(np.uint8)
+
+plt.figure(figsize=(12, 6))
+plt.suptitle('Filtering Using Custom Sobel Filter')
+
+plt.subplot(121)
+plt.imshow(img_orig, cmap='gray')
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(122)
+plt.imshow(gradient_mag, cmap='gray')
+plt.title('Sobel Filtered Image')
+plt.axis('off')
+
+plt.show()
