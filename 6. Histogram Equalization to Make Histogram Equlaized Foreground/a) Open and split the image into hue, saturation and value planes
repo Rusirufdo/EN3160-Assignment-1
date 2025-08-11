@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2 as cv
+
+img_orig = cv.imread(r"C:\Users\Rusiru_fdo\Desktop\a1images\jeniffer.jpg", cv.IMREAD_COLOR)
+img_rgb = cv.cvtColor(img_orig, cv.COLOR_BGR2RGB)
+
+img_hsv = cv.cvtColor(img_orig, cv.COLOR_BGR2HSV)
+h_channel, s_channel, v_channel = cv.split(img_hsv)
+
+plt.figure(figsize=(14, 6))
+
+plt.subplot(141)
+plt.imshow(img_rgb)
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(142)
+plt.imshow(h_channel, cmap='gray')
+plt.title('Hue Channel')
+plt.axis('off')
+
+plt.subplot(143)
+plt.imshow(s_channel, cmap='gray')
+plt.title('Saturation Channel')
+plt.axis('off')
+
+plt.subplot(144)
+plt.imshow(v_channel, cmap='gray')
+plt.title('Value Channel')
+plt.axis('off')
+
+plt.tight_layout()
+plt.show()
