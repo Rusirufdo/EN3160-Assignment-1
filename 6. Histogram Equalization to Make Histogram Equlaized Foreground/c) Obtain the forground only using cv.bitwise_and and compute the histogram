@@ -1,0 +1,42 @@
+foreground_img = cv.bitwise_and(img_orig, img_orig, mask=foreground_mask3)
+
+plt.figure(figsize=(14, 6))
+plt.subplot(131)
+plt.imshow(img_rgb)
+plt.title('Original Image')
+plt.axis('off')
+
+plt.subplot(132)
+plt.imshow(foreground_mask3, cmap='gray')
+plt.title('Foreground Mask (Value Plane)')
+plt.axis('off')
+
+plt.subplot(133)
+plt.imshow(cv.cvtColor(foreground_img, cv.COLOR_BGR2RGB))
+plt.title('Foreground of Original Image')
+plt.axis('off')
+plt.show()
+
+b_hist = cv.calcHist([foreground_img], [0], None, [256], [0, 256])
+g_hist = cv.calcHist([foreground_img], [1], None, [256], [0, 256])
+r_hist = cv.calcHist([foreground_img], [2], None, [256], [0, 256])
+
+plt.figure(figsize=(14, 4))
+plt.subplot(131)
+plt.plot(b_hist, color='blue')
+plt.title('Blue Channel')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+
+plt.subplot(132)
+plt.plot(g_hist, color='green')
+plt.title('Green Channel')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+
+plt.subplot(133)
+plt.plot(r_hist, color='red')
+plt.title('Red Channel')
+plt.xlabel('Pixel Value')
+plt.ylabel('Frequency')
+plt.show()
