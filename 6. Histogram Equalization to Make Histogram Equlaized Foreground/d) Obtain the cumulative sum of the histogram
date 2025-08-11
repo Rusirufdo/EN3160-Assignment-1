@@ -1,0 +1,23 @@
+cumulative_hist_b = np.cumsum(b_hist)
+cumulative_hist_g = np.cumsum(g_hist)
+cumulative_hist_r = np.cumsum(r_hist)
+
+plt.figure(figsize=(14, 4))
+plt.subplot(131)
+plt.plot(cumulative_hist_b, color='blue')
+plt.title('Cumulative Blue Channel')
+plt.xlabel('Pixel value')
+plt.ylabel('Frequency')
+
+plt.subplot(132)
+plt.plot(cumulative_hist_g, color='green')
+plt.title('Cumulative Green Channel')
+plt.xlabel('Pixel value')
+plt.ylabel('Frequency')
+
+plt.subplot(133)
+plt.plot(cumulative_hist_r, color='red')
+plt.title('Cumulative Red Channel')
+plt.xlabel('Pixel value')
+plt.ylabel('Frequency')
+plt.show()
