@@ -1,0 +1,61 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2 as cv
+
+def ssd(img1, img2):
+    return np.sum((img1.astype(np.float32) - img2.astype(np.float32))**2)
+
+def zooming(original_image, zoom_factor):
+    if original_image is None:
+        print("Error: Original image not loaded properly.")
+        return
+    
+    height, width, channels = original_image.shape
+    
+    zoomed_height = int(height * zoom_factor)
+    zoomed_width = int(width * zoom_factor)
+    
+    # Use OpenCV resize with nearest neighbor (like your manual method)
+    zoomed_image = cv.resize(original_image, (zoomed_width, zoomed_height), interpolation=cv.INTER_NEAREST)
+    
+    # Convert BGR to RGB for displaying with matplotlib
+    original_rgb = cv.cvtColor(original_image, cv.COLOR_BGR2RGB)
+    zoomed_rgb = cv.cvtColor(zoomed_image, cv.COLOR_BGR2RGB)
+    
+    plt.figure(figsize=(12,6))
+    
+    plt.subplot(1,2,1)
+    plt.imshow(original_rgb)
+    plt.title('Original Image')
+    plt.axis('off')
+    
+    plt.subplot(1,2,2)
+    plt.imshow(zoomed_rgb)
+    plt.title(f'Zoomed Image (x{zoom_factor})')
+    plt.axis('off')
+    
+    plt.show()
+    
+    # Save the zoomed image
+    save_path = r"C:\Users\Rusiru_fdo\Desktop\a1images\a1q5images\im03small.png"
+    cv.imwrite(save_path, zoomed_image)
+    print(f"Zoomed image saved to {save_path}")
+    
+    # Read a big reference image to compare SSD (make sure path is correct)
+    img_BIG = cv.imread(r"C:\Users\Rusiru_fdo\Desktop\a1images\a1q5images\im03.png", cv.IMREAD_COLOR)
+    if img_BIG is None:
+        print("Warning: Reference image (im03.png) not loaded. Cannot compute SSD.")
+        return
+    
+    # Resize reference image to zoomed size for SSD comparison
+    img_BIG_resized = cv.resize(img_BIG, (zoomed_width, zoomed_height), interpolation=cv.INTER_LINEAR)
+    
+    ssd_value = ssd(img_BIG_resized, zoomed_image)
+    print(f"SSD value between resized reference and zoomed image: {ssd_value}")
+
+# Load your original image
+img_orig = cv.imread(r"C:\Users\Rusiru_fdo\Desktop\a1images\a1q5images\im03small.png", cv.IMREAD_COLOR)
+
+zoom_factor = 4
+print("Zooming factor:", zoom_factor)
+zooming(img_orig, zoom_factor)
