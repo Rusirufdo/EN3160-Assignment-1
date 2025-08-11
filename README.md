@@ -85,11 +85,11 @@ Basic intensity transformation operations to enhance image contrast and brightne
 Two interpolation methods implemented and compared:
 
 #### (a) Nearest Neighborhood Method
-- **SSD Value:** 180,381,523
+- **SSD Value:** 10556422144.0
 - Fast computation with pixelated results
 
 #### (b) Bilinear Interpolation Method
-- **SSD Value:** 2,031,930,775
+- **SSD Value:** 1245684400.0
 - Smoother results with higher computational cost
 
 ### 9. **Image Segmentation** 🎨
