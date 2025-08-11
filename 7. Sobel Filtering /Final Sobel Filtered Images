@@ -1,0 +1,23 @@
+plt.figure(figsize=(16,4))
+
+plt.subplot(141)
+plt.imshow(img, cmap='gray')
+plt.title('Original Image in Gray Scale', fontsize=8)
+plt.axis('off')
+
+plt.subplot(142)
+plt.imshow(img_filt, cmap='gray')
+plt.title('Sobel Filtered Using filter2D Function', fontsize=8)
+plt.axis('off')
+
+plt.subplot(143)
+plt.imshow(gradient_mag, cmap='gray')
+plt.title('Sobel Filtered Using Custom Convolution Method', fontsize=8)
+plt.axis('off')
+
+plt.subplot(144)
+plt.imshow(conv_2, cmap='gray')
+plt.title('Sobel Filtered Using Assosiative Convolution', fontsize=8)
+plt.axis('off')
+
+plt.show()
