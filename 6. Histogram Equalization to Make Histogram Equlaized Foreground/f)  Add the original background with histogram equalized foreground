@@ -1,0 +1,31 @@
+# Extract the background by bitwise_not
+background = cv.bitwise_and(img_orig, img_orig, mask=cv.bitwise_not(foreground_mask3))
+
+final_modified_img = cv.add(background, equalized_img)
+final_modified_img_rgb = cv.cvtColor(final_modified_img, cv.COLOR_BGR2RGB)
+
+#region
+plt.figure(figsize=(16, 4))
+
+plt.subplot(141)
+plt.imshow(img_rgb)
+plt.title("Original Image")
+plt.axis('off')
+
+plt.subplot(142)
+plt.imshow(cv.cvtColor(background, cv.COLOR_BGR2RGB))
+plt.title("Background of the Image")
+plt.axis('off')
+
+plt.subplot(143)
+plt.imshow(cv.cvtColor(equalized_img, cv.COLOR_BGR2RGB))
+plt.title('Foreground of the Equalized Image')
+plt.axis('off')
+
+plt.subplot(144)
+plt.imshow(final_modified_img_rgb)
+plt.title("Image after Foreground Equalization")
+plt.axis('off')
+
+plt.show()
+#endregion
